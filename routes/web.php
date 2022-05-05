@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Listing;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/listings', function () {
+    return view('listings',[
+        'heading'=> 'Latest Listings',
+        'listings'=> Listing::all()
+    ]);
+});
 Route::get('/', function () {
-    return view('welcome');
+    return view('listings',[
+        'heading'=> 'Latest Listings',
+        'listings'=> Listing::all()
+    ]);
 });
 
 Route::get('/posts/{id}', function ($id) {
@@ -28,3 +36,17 @@ Route::get('/posts/{id}', function ($id) {
 Route::get('/search',function(Request $request){
 
 });
+
+Route::get('/listing/{id}',function($id){
+    return view('listing',[
+        'listing' => Listing::find($id)
+    ]);
+}); 
+
+/* Route::get('/',function(){
+    return view('listing',
+    [
+        'heading' => 'Latest Listings',
+        'listing' => Listing::all()
+    ]);
+}); */
