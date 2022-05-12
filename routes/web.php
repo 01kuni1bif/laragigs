@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -13,35 +14,41 @@ use App\Models\Listing;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/listings', function () {
+//all listings
+/* Route::get('/listings', function () {
     return view('listings',[
-        'heading'=> 'Latest Listings',
+        
         'listings'=> Listing::all()
     ]);
-});
-Route::get('/', function () {
-    return view('listings',[
-        'heading'=> 'Latest Listings',
-        'listings'=> Listing::all()
-    ]);
-});
+}); */
 
-Route::get('/posts/{id}', function ($id) {
+/* Route::get('/posts/{id}', function ($id) {
     dd($id);
     return response('Post ' .$id);
     dd($id);
-})->where('id','[0-9]+');
+})->where('id','[0-9]+'); */
 
-Route::get('/search',function(Request $request){
+/* Route::get('/',[ListingController::class,'filter']);  */
 
-});
+Route::get('/',[ListingController::class,'index']);
 
-Route::get('/listing/{id}',function($id){
-    return view('listing',[
-        'listing' => Listing::find($id)
-    ]);
-}); 
+
+//store ListingData
+Route::post('/listings',[ListingController::class,'store']);
+
+
+Route::get('/listings',[ListingController::class,'index']);
+
+
+//get to the create side
+Route::get('/listings/create',[ListingController::class,'create']);
+
+
+//get a special list
+Route::get('/listings/{listing}',[ListingController::class,'show']);
+
+    
+    
 
 /* Route::get('/',function(){
     return view('listing',
