@@ -61,6 +61,44 @@ class ListingController extends Controller
 
         return redirect('/')->with('message','Listing created successfully');
     }
+
+    //Show Edit Form
+
+    public function edit(Listing $listing){
+        
+        return view('listings.edit',['listing'=>$listing]);
+    }
+    //Update Listing Data
+    public function update(Request $request,Listing $listing){
+       
+        $formFields = $request->validate([
+            'title' => 'required',
+            //unique() does not work
+            'company'=> 'required',
+            'location'=> 'required',
+            'website'=> 'required',
+            'email'=> 'required',
+            'tags'=>'required',
+            'discription'=>'required'
+
+        ]);
+        if($request->hasFile('logo')){
+            $formFields['logo'] = $request->file('logo')->store('logos',
+            'public');
+        }
+
+        $listing->update($formFields);
+
+        //Session::flash('message','Listing Created');
+    
+
+        return back()->with('message','Listing updated successfully');
+    }
+    //delete Listings
+    public function destroy(Listing $listing ){
+        $listing->delete();
+        return redirect('/')->with('message','Listing Deleted Successfully !');
+    }
     
 
 
