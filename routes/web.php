@@ -75,7 +75,8 @@ Route::get('/login',[UserController::class,'login'])->name('login')->middleware(
 //login USer
 Route::post('/users/authenticate',[UserController::class,'authenticate']);
 
-
+//Manage Listings
+Route::get('/listings/manage',[ListingController::class,'manage']);//->middleware('auth')
 
 
     
